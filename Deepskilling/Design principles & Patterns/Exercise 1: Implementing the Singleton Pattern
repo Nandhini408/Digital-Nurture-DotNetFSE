@@ -1,1 +1,18 @@
-
+class Singleton:
+    _instance = None
+    def __new__(cls, value=None):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+            cls._instance.value = value
+        return cls._instance
+    def get_value(self):
+        return self.value
+value1 = input("Enter first value: ")
+value2 = input("Enter second value: ")
+obj1 = Singleton(value1)
+obj2 = Singleton(value2)
+print("Value stored in Singleton:", obj1.get_value())
+if obj1 is obj2:
+    print("Only one instance exists")
+else:
+    print("Multiple instances exist")
