@@ -1,1 +1,48 @@
+import java.util.Scanner;
 
+class Logger {
+
+    private static Logger instance;
+    private String message;
+
+    private Logger(String message) {
+        this.message = message;
+    }
+
+    public static Logger getInstance(String message) {
+        if (instance == null) {
+            instance = new Logger(message);
+        }
+        return instance;
+    }
+
+    public void log() {
+        System.out.println("LOG: " + message);
+    }
+}
+
+public class SingletonTest {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter first message: ");
+        String msg1 = sc.nextLine();
+
+        System.out.print("Enter second message: ");
+        String msg2 = sc.nextLine();
+
+        Logger logger1 = Logger.getInstance(msg1);
+        Logger logger2 = Logger.getInstance(msg2);
+
+        logger1.log();
+
+        if (logger1 == logger2) {
+            System.out.println("Only one Logger instance exists.");
+        } else {
+            System.out.println("Multiple Logger instances exist.");
+        }
+
+        sc.close();
+    }
+}
