@@ -1,1 +1,79 @@
+import java.util.Scanner;
 
+interface Document {
+    void open();
+}
+
+class WordDocument implements Document {
+    public void open() {
+        System.out.println("Opening Word Document");
+    }
+}
+
+class PdfDocument implements Document {
+    public void open() {
+        System.out.println("Opening PDF Document");
+    }
+}
+
+class ExcelDocument implements Document {
+    public void open() {
+        System.out.println("Opening Excel Document");
+    }
+}
+
+abstract class DocumentFactory {
+    abstract Document createDocument();
+}
+
+class WordFactory extends DocumentFactory {
+    Document createDocument() {
+        return new WordDocument();
+    }
+}
+
+class PdfFactory extends DocumentFactory {
+    Document createDocument() {
+        return new PdfDocument();
+    }
+}
+
+class ExcelFactory extends DocumentFactory {
+    Document createDocument() {
+        return new ExcelDocument();
+    }
+}
+
+public class FactoryMethodTest {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter document type (word/pdf/excel): ");
+        String type = sc.nextLine().toLowerCase();
+
+        DocumentFactory factory = null;
+
+        switch (type) {
+            case "word":
+                factory = new WordFactory();
+                break;
+            case "pdf":
+                factory = new PdfFactory();
+                break;
+            case "excel":
+                factory = new ExcelFactory();
+                break;
+            default:
+                System.out.println("Invalid document type");
+                sc.close();
+                return;
+        }
+
+        Document document = factory.createDocument();
+        document.open();
+
+        sc.close();
+    }
+}
